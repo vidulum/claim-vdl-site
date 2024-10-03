@@ -4,6 +4,7 @@ const API_URL = 'https://claim-api.vidulum.app/api';
 
 interface StatusResponse {
   status: {
+    txid?: string;
     submit?: string;
     complete?: string;
   };
@@ -38,6 +39,7 @@ export const apiGetStatus = async (vdlAddress: string) => {
 
     const status: StatusResponse = {
       status: {
+        txid: data.txid,
         submit: data.submit,
         complete: data.completed,
       },
