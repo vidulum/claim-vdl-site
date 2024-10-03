@@ -4,6 +4,7 @@ import { apiGetStatus } from '../common/api';
 
 interface StatusResponse {
   status: {
+    txid?: string;
     submit?: string;
     complete?: string;
   };
@@ -156,6 +157,20 @@ export function Status() {
             {statusInfo.status.complete && (
               <Text fontSize='$md' attributes={{ ml: '$4' }}>
                 {new Date(statusInfo.status.complete).toLocaleDateString()}
+              </Text>
+            )}
+          </Stack>
+
+          {/* Claimed TXID */}
+          <Stack
+            direction='horizontal'
+            attributes={{ mb: '$4', ml: '$12', alignItems: 'center' }}
+          >
+            {renderStatusIcon(statusInfo.status.txid)}
+            <Text fontSize='$lg'>Claimed VDL TXID</Text>
+            {statusInfo.status.txid && (
+              <Text fontSize='$md' attributes={{ ml: '$4' }}>
+                {statusInfo.status.txid}
               </Text>
             )}
           </Stack>
