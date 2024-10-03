@@ -1,6 +1,6 @@
 import { error } from 'console';
 
-const API_URL = 'http://localhost:3001';
+const API_URL = 'https://claim-api.vidulum.app/api';
 
 interface StatusResponse {
   status: {
