@@ -95,24 +95,24 @@ export const Mnemonic: React.FC = () => {
         signature.signature.signature
       );
 
-      if (isValid) {
-        const verified = await apiVerifyMessage(
-          bzeAddress,
-          vdlPubKey,
-          signature.signature.signature,
-          vdlAddress
-        );
-
-        if (!verified) {
-          setError('Failed to verify the message.');
-        } else {
-          setError('');
-          setSignature(signature.signature.signature);
-        }
-      } else {
-        setError('Signature verification failed.');
+      if (!isValid) {
+        setError('Signature is not valid.');
+        return;
       }
-    } catch (error) {
+      const error = await apiVerifyMessage(
+        bzeAddress,
+        vdlPubKey,
+        signature.signature.signature,
+        vdlAddress
+      );
+
+      if (error) {
+        setError(error);
+        return;
+      }
+      setError('');
+      setSignature(signature.signature.signature);
+    } catch (err) {
       setError('Signature verification failed.');
       console.log('Error signing message:', error);
     }
