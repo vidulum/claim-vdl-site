@@ -1,6 +1,13 @@
+/**
+ * IMPORTANT NOTE:
+ * No private keys, mnemonics, or any other secure private key information 
+ * are ever sent to this backend. This file strictly handles non-sensitive 
+ * data and ensures the security of user credentials.
+ */
+
 import { error } from 'console';
 
-const API_URL = 'https://claim-api.vidulum.app/api';
+const API_URL = 'https://claim.vidulum.app/api';
 
 interface StatusResponse {
   status: {
@@ -76,14 +83,15 @@ export const apiVerifyMessage = async (
 
     const data = await response.json();
     // {
-    //   error: null,
+    //   error: string || null
     // }
-    if (!data.error) {
-      return true;
+    if (data.error) {
+      return data.error;
     }
-    return false;
+    return null;
   } catch (error) {
-    console.error('Error verifying message:', error);
-    return false;
+    const errLabel = 'Error while trying to verifying your claim.';
+    console.error(errLabel, error);
+    return errLabel;
   }
 };
