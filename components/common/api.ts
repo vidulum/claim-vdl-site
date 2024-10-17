@@ -7,7 +7,7 @@
 
 import { error } from 'console';
 
-const API_URL = 'https://claim.vidulum.app/api';
+const API_URL = 'https://claim-api.vidulum.app/api';
 
 interface StatusResponse {
   status: {
