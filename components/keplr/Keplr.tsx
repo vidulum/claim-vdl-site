@@ -121,26 +121,26 @@ export function Keplr() {
         signResponse.signature
       );
 
-      if (isValid) {
-        const verified = await apiVerifyMessage(
-          bzeAddress,
-          vdlPubKey,
-          signResponse.signature,
-          vdlAddress
-        );
-
-        if (!verified) {
-          setError('Failed to verify the message.');
-        } else {
-          setError('');
-          setSignature(signResponse.signature);
-        }
-      } else {
-        setError('Signature verification failed.');
+      if (!isValid) {
+        setError('Signature is not valid.');
+        return;
       }
+      const error = await apiVerifyMessage(
+        bzeAddress,
+        vdlPubKey,
+        signResponse.signature,
+        vdlAddress
+      );
+
+      if (error) {
+        setError(error);
+        return;
+      }
+      setError('');
+      setSignature(signResponse.signature);
     } catch (err) {
-      console.log(err);
-      setError('Failed to sign the message.');
+      setError('Signature verification failed.');
+      console.log('Error signing message:', error);
     }
   };
 
